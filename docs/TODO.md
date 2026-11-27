@@ -62,13 +62,14 @@
 
 - [x] DB-001: implementasi lima migration TEMARA.
 - [x] DB-001 Review: audit migration selesai, **PASS WITH WARNINGS**.
-- [ ] DB-001A: jalankan migration aktual.
-- [ ] DB-002: buat Eloquent Models (`Elder`, `Caregiver`, `Booking`, `Control`, `Medication`) dan update model `User` bila diperlukan.
-- [ ] DB-002: definisikan seluruh Eloquent relationships.
-- [ ] DB-002: verifikasi relasi dengan test/tinker atau pemeriksaan aplikasi.
-- [ ] DB-003: buat `CaregiverSeeder` dengan data sintetis.
-- [ ] DB-003: panggil seeder dari `DatabaseSeeder`.
-- [ ] DB-003: jalankan seeder dan verifikasi data caregiver.
+- [x] DB-001A: jalankan migration aktual.
+- [x] DB-001A: `migrate:status` menunjukkan seluruh 8 migration berstatus `Ran`, termasuk lima migration TEMARA.
+- [x] DB-002: buat Eloquent Models (`Elder`, `Caregiver`, `Booking`, `Control`, `Medication`) dan update model `User` bila diperlukan.
+- [x] DB-002: definisikan seluruh Eloquent relationships.
+- [x] DB-002: audit statis deklarasi relasi terhadap migration, pemeriksaan sintaks PHP, dan `git diff --check` berhasil; `php artisan test` menghasilkan 2 tests passed (2 assertions). Pengujian query relationships secara fungsional belum dilakukan.
+- [x] DB-003: buat `CaregiverSeeder` dengan 7 data caregiver fiktif.
+- [x] DB-003: daftarkan pemanggilan `CaregiverSeeder` di `DatabaseSeeder` tanpa mengubah seeding User Factory yang sudah ada.
+- [x] DB-003: verifikasi sintaks PHP, `git diff --check`, dan idempotency dengan menjalankan seeder dua kali; jumlah caregiver tetap 7.
 
 ### Authentication & Core Backend
 
@@ -139,20 +140,10 @@
 
 ## Current Checkpoint
 
-**Task berikutnya:** `DB-001A — Actual Database Migration`  
-**Owner:** Marseal (Backend)  
-**Status:** READY TO EXECUTE setelah memastikan berada di branch `dev` dan working tree bersih.  
-**Effort:** Low; jalankan perintah Artisan langsung, tidak membutuhkan Codex.
-
-```powershell
- git switch dev
- git pull origin dev
- git status --short --branch
- php artisan migrate
- php artisan migrate:status
-```
-
-Jangan gunakan `migrate:fresh`, `migrate:reset`, atau `migrate:rollback` untuk checkpoint ini.
+**Task berikutnya:** `AUTH-001 — Authentication & Application Foundation`
+**Owner:** Marseal (Project Lead + Backend)
+**Status:** READY TO START.
+**Effort:** Medium.
 
 ## Waiting Gates
 
@@ -168,5 +159,8 @@ Jangan gunakan `migrate:fresh`, `migrate:reset`, atau `migrate:rollback` untuk c
 | 2026-11-17 | Laravel project, koneksi MySQL, migration awal, review DB-001, GitHub main dan dev disiapkan. | Selesai sesuai laporan |
 | 2026-11-23 | PRD Revisi 1.1 dijadikan basis dokumentasi repo; invitation collaborator dilaporkan diterima. | Selesai sesuai laporan |
 | 2026-11-23 | Dokumen `PRD.md`, `TODO.md`, `IMPLEMENTATION_PLAN.md`, dan `ARCHITECTURE.md` disiapkan. | Siap ditambahkan ke repository |
+| 2026-11-27 | DB-002: lima model TEMARA dan relasi ditambahkan; deklarasi diaudit terhadap migration. Pemeriksaan sintaks PHP dan `git diff --check` lulus. Percobaan awal menjalankan PHPUnit sempat gagal membuka `vendor/autoload.php`; kendala tersebut kemudian teratasi dan pengujian berhasil pada validasi berikutnya. | Kendala awal teratasi; validasi akhir lulus |
+| 2026-11-27 | DB-001A selesai: migration aktual dijalankan dan seluruh 8 migration berstatus `Ran`. DB-002 diintegrasikan melalui PR #2 (merge commit `9a14ff8`); audit statis, pemeriksaan sintaks PHP, dan `git diff --check` berhasil; `php artisan test` menghasilkan 2 tests passed (2 assertions). Query relationships belum diuji secara fungsional. | Selesai |
+| 2026-11-27 | DB-003: `CaregiverSeeder` berisi 7 data fiktif dan dipanggil dari `DatabaseSeeder`. Pemeriksaan sintaks PHP dan `git diff --check` lulus; seeder dijalankan dua kali dan jumlah caregiver tetap 7. | Selesai |
 
 > **Update rule:** setiap kali sebuah task selesai, ubah checkbox dan tambahkan satu baris pada Update Log. Jika task menunggu anggota lain, tuliskan nama role, artefak yang ditunggu, dan kondisi untuk melanjutkan.
